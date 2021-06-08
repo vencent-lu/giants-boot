@@ -1,0 +1,9 @@
+giants:
+  boot:
+    common:
+      message-source-names:
+        - giants-gateway-resources
+      fast-json-config:
+        date-format: yyyy-MM-dd HH:mm:ss
+        serializer-features:
+          - DisableCircularReferenceDetect
