@@ -1,7 +1,10 @@
 package com.giants.boot.gateway.configuration;
 
+import com.giants.cache.core.GiantsCache;
+import com.giants.cache.core.GiantsCacheManager;
+import com.giants.cache.core.aop.GiantsCacheAop;
+import com.giants.cache.core.filter.GiantsCacheFilter;
 import com.giants.web.filter.WebFilter;
-import com.giants.web.springmvc.advice.JsonResultResponseAdvice;
 import com.giants.web.springmvc.aop.ControllerValidationAop;
 import com.giants.web.springmvc.resolver.JsonResultExceptionResolver;
 import com.google.common.collect.Lists;
@@ -9,10 +12,9 @@ import org.apache.commons.lang.ArrayUtils;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.Ordered;
+import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springmodules.validation.commons.DefaultBeanValidator;
 import org.springmodules.validation.commons.DefaultValidatorFactory;
 
@@ -29,47 +31,31 @@ import java.io.IOException;
 @Configuration
 public class GiantsBootGatewaySpringBeansConfiguration {
 
-    @javax.annotation.Resource
-    private HttpMessageConverter fastJsonHttpMessageConverter;
-
     @Bean
-    public FilterRegistrationBean createWebFilter() {
-        FilterRegistrationBean webFilter = new FilterRegistrationBean();
+    public FilterRegistrationBean<WebFilter> createWebFilter() {
+        FilterRegistrationBean<WebFilter> webFilter = new FilterRegistrationBean<WebFilter>();
         webFilter.setName("webFilter");
         webFilter.setFilter(new WebFilter());
         webFilter.setUrlPatterns(Lists.newArrayList("*"));
+        webFilter.setOrder(Ordered.HIGHEST_PRECEDENCE+2);
         return webFilter;
     }
 
     @Bean
-    public RequestMappingHandlerAdapter createRequestMappingHandlerAdapter() {
-        RequestMappingHandlerAdapter requestMappingHandlerAdapter = new RequestMappingHandlerAdapter();
-        JsonResultResponseAdvice jsonResultResponseAdvice = new JsonResultResponseAdvice();
-        jsonResultResponseAdvice.setJsonpQueryParamName("callback");
-        jsonResultResponseAdvice.setUriExcludeList(Lists.newArrayList("/v2/api-docs",
-                "/swagger-resources/configuration/ui", "/swagger-resources/configuration/security","/swagger-resources"));
-        requestMappingHandlerAdapter.setResponseBodyAdvice(Lists.newArrayList(jsonResultResponseAdvice));
-        requestMappingHandlerAdapter.setMessageConverters(Lists.newArrayList(this.fastJsonHttpMessageConverter));
-        return requestMappingHandlerAdapter;
-    }
-
-    @Bean
-    public JsonResultExceptionResolver createJsonResultExceptionResolver() {
+    public JsonResultExceptionResolver createJsonResultExceptionResolver(HttpMessageConverter<Object> fastJsonHttpMessageConverter) {
         JsonResultExceptionResolver jsonResultExceptionResolver = new JsonResultExceptionResolver();
         //jsonResultExceptionResolver.setIncludeModelAndView(true);
         jsonResultExceptionResolver.setJsonpQueryParamName("callback");
-        jsonResultExceptionResolver.setMessageConverters(Lists.newArrayList(this.fastJsonHttpMessageConverter));
+        jsonResultExceptionResolver.setMessageConverters(Lists.newArrayList(fastJsonHttpMessageConverter));
         return jsonResultExceptionResolver;
     }
 
     @Bean("controllerValidationAop")
-    public ControllerValidationAop createControllerValidationAop() throws IOException {
+    public ControllerValidationAop createControllerValidationAop(ResourcePatternResolver resourcePatternResolver) throws IOException {
         DefaultValidatorFactory validatorFactory = new DefaultValidatorFactory();
-        PathMatchingResourcePatternResolver pathMatchingResourcePatternResolver =
-                new PathMatchingResourcePatternResolver();
-        validatorFactory.setValidationConfigLocations((Resource[]) ArrayUtils.addAll(
-                pathMatchingResourcePatternResolver.getResources("classpath*:/validator-rules.xml"),
-                pathMatchingResourcePatternResolver.getResources("classpath*:/validation-*.xml")));
+        validatorFactory.setValidationConfigLocations((org.springframework.core.io.Resource[]) ArrayUtils.addAll(
+                resourcePatternResolver.getResources("classpath*:/validator-rules.xml"),
+                resourcePatternResolver.getResources("classpath*:/validation-*.xml")));
 
         DefaultBeanValidator validator = new DefaultBeanValidator();
         validator.setUseFullyQualifiedClassName(false);
@@ -80,6 +66,28 @@ public class GiantsBootGatewaySpringBeansConfiguration {
         controllerValidationAop.setErrorMessageKey("errors.validation.failure");
         controllerValidationAop.setDontThrowExceptionsReturnTypes(Lists.newArrayList("org.springframework.web.servlet.ModelAndView"));
         return controllerValidationAop;
+    }
+
+    @Bean("giantsCacheApiAop")
+    public GiantsCacheAop createGiantsCacheApiAop(GiantsCache giantsCache) {
+        GiantsCacheAop giantsCacheDaoAop = new GiantsCacheAop();
+        giantsCacheDaoAop.setCacheModelName("api");
+        giantsCacheDaoAop.setCacheConfigFilePath(giantsCache.getCacheConfigFilePath());
+        return giantsCacheDaoAop;
+    }
+
+    @Bean
+    public FilterRegistrationBean<GiantsCacheFilter> createGiantsCacheFilter(GiantsCache giantsCache,
+                                                                             GiantsCacheManager giantsCacheManager) {
+        FilterRegistrationBean<GiantsCacheFilter> webFilter = new FilterRegistrationBean<GiantsCacheFilter>();
+        webFilter.setName("giantsCacheFilter");
+        GiantsCacheFilter giantsCacheFilter = new GiantsCacheFilter();
+        giantsCacheFilter.setCacheModelName("servlet");
+        giantsCacheFilter.setCacheConfigFilePath(giantsCache.getCacheConfigFilePath());
+        webFilter.setFilter(giantsCacheFilter);
+        webFilter.setUrlPatterns(Lists.newArrayList("*"));
+        webFilter.setOrder(Ordered.HIGHEST_PRECEDENCE+1);
+        return webFilter;
     }
 
 }

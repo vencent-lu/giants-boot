@@ -1,7 +1,8 @@
 package com.giants.boot.gateway.configuration;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.NestedConfigurationProperty;
+
+import java.util.List;
 
 /**
  * GiantsBootGatewayProperties TODO
@@ -11,22 +12,18 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
  * @author vencent-lu
  * @since 1.0
  */
-@ConfigurationProperties(prefix = "giants.boot.gateway")
+@ConfigurationProperties(prefix = "giants.boot")
 public class GiantsBootGatewayProperties {
 
-    private String swaggerTest;
-
-    public String getSwaggerTest() {
-        return swaggerTest;
-    }
-
-    public void setSwaggerTest(String swaggerTest) {
-        this.swaggerTest = swaggerTest;
-    }
-
+    /**
+     * swagger配置
+     */
     private SwaggerConfig swaggerConfig;
 
     public SwaggerConfig getSwaggerConfig() {
+        if (swaggerConfig == null) {
+            return new SwaggerConfig();
+        }
         return swaggerConfig;
     }
 
@@ -35,10 +32,31 @@ public class GiantsBootGatewayProperties {
     }
 
     public static class SwaggerConfig {
+        /**
+         * API文档信息配置，名称、作者、版本等配置信息
+         */
         private ApiInfo apiInfo;
+        /**
+         * 是否开启Swagger文档
+         */
         private boolean enabled = false;
+        /**
+         * 使用默认Response Messages 除200之外的状态
+         */
         private boolean useDefaultResponseMessages = false;
+        /**
+         * 只展示Api注解的方法接口
+         */
         private boolean onlyApiAnnotationClass = true;
+        /**
+         * 忽略参数类型，入参 和 返回结果对象都会忽略
+         */
+        private List<Class> ignoreParameterTypes;
+
+        /**
+         * 忽略请求参数类型，入参对象都会忽略
+         */
+        private List<Class> ignoreRequestParameterTypes;
 
         public ApiInfo getApiInfo() {
             return apiInfo;
@@ -72,13 +90,50 @@ public class GiantsBootGatewayProperties {
             this.onlyApiAnnotationClass = onlyApiAnnotationClass;
         }
 
+        public List<Class> getIgnoreParameterTypes() {
+            return ignoreParameterTypes;
+        }
+
+        public void setIgnoreParameterTypes(List<Class> ignoreParameterTypes) {
+            this.ignoreParameterTypes = ignoreParameterTypes;
+        }
+
+        public List<Class> getIgnoreRequestParameterTypes() {
+            return ignoreRequestParameterTypes;
+        }
+
+        public void setIgnoreRequestParameterTypes(List<Class> ignoreRequestParameterTypes) {
+            this.ignoreRequestParameterTypes = ignoreRequestParameterTypes;
+        }
+
         public static class ApiInfo {
+            /**
+             * 文档标题
+             */
             private String title;
+            /**
+             * 文档说明
+             */
             private String description;
+            /**
+             * 文档版本
+             */
             private String version;
+            /**
+             * 团队服务链接
+             */
             private String termsOfServiceUrl;
+            /**
+             * 联系人信息
+             */
             private Contact contact;
+            /**
+             * 许可信息 如：Apache 2.0
+             */
             private String license;
+            /**
+             * 许可网站地址
+             */
             private String licenseUrl;
 
             public String getTitle() {

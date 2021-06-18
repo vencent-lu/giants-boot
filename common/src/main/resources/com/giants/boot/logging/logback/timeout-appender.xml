@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<included>
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <property name="TIMEOUT_LOG_FILE_NAME_PATTERN" value="logs/${appName}-timeout-request.%d{yyyy-MM-dd}.%i.log"/>
+
+    <appender name="TIMEOUT-REQUEST" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${TIMEOUT_LOG_FILE_NAME_PATTERN}</fileNamePattern>
+            <!-- 日志保留天数 -->
+            <maxHistory>30</maxHistory>
+            <!-- 日志文件上限大小，达到指定大小后删除旧的日志文件 -->
+            <totalSizeCap>2GB</totalSizeCap>
+            <!-- 每个日志文件的最大值 -->
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>50MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+
+        <encoder charset="UTF-8">
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.giants.analyse.filter.ExecutionTimeProfilerFilter" additivity="true">
+        <appender-ref ref="TIMEOUT-REQUEST"/>
+    </logger>
+</included>

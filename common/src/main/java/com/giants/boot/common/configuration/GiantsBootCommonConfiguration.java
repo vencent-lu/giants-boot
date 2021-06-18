@@ -1,6 +1,5 @@
 package com.giants.boot.common.configuration;
 
-import com.giants.boot.common.annotation.AnnotationAspect;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -17,7 +16,7 @@ import org.springframework.context.annotation.Import;
 @EnableConfigurationProperties(GiantsBootCommonProperties.class)
 @Import({
         GiantsBootCommonSpringBeansConfiguration.class,
-        AnnotationAspect.class
+        GiantsBootCommonFeignConfiguration.class
 })
 public class GiantsBootCommonConfiguration {
 }

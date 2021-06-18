@@ -1,5 +1,10 @@
 package com.giants.boot.gateway.configuration;
 
+import com.giants.boot.common.configuration.GiantsBootCommonProperties;
+import com.giants.common.collections.CollectionUtils;
+import com.giants.swagger.configuration.GiantsSwaggerProperties;
+import com.giants.swagger.configuration.ReturnResultClass;
+import com.giants.web.springmvc.json.JsonResult;
 import io.swagger.annotations.Api;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,14 +31,37 @@ import java.util.ArrayList;
  */
 @Configuration
 @EnableSwagger2
-public class SwaggerConfig {
+public class GiantsSwaggerConfig {
 
     @Resource
+    private GiantsBootCommonProperties giantsBootCommonProperties;
+    @Resource
     private GiantsBootGatewayProperties giantsBootGatewayProperties;
+    @Resource
+    private GiantsSwaggerProperties giantsSwaggerProperties;
 
     @Bean
     public Docket docker(){
+        if (this.giantsBootCommonProperties.getFastJsonConfig() != null
+                && CollectionUtils.isEmpty(this.giantsSwaggerProperties.getIgnoreModelPropertyNames())) {
+            this.giantsSwaggerProperties.setIgnoreModelPropertyNames(this.giantsBootCommonProperties.getFastJsonConfig().getIgnorePropertyNames());
+        }
         GiantsBootGatewayProperties.SwaggerConfig swaggerConfig = this.giantsBootGatewayProperties.getSwaggerConfig();
+        if (CollectionUtils.isNotEmpty(swaggerConfig.getIgnoreParameterTypes())
+                && CollectionUtils.isEmpty(this.giantsSwaggerProperties.getIgnoreParameterTypes())) {
+            this.giantsSwaggerProperties.setIgnoreParameterTypes(swaggerConfig.getIgnoreParameterTypes());
+        }
+        if (CollectionUtils.isNotEmpty(swaggerConfig.getIgnoreRequestParameterTypes())
+                && CollectionUtils.isEmpty(this.giantsSwaggerProperties.getIgnoreRequestParameterTypes())) {
+            this.giantsSwaggerProperties.setIgnoreRequestParameterTypes(swaggerConfig.getIgnoreRequestParameterTypes());
+        }
+        if (this.giantsSwaggerProperties.getReturnResultClass() == null) {
+            ReturnResultClass returnResultClass = new ReturnResultClass();
+            returnResultClass.setType(JsonResult.class);
+            returnResultClass.setDataProperty("data");
+            this.giantsSwaggerProperties.setReturnResultClass(returnResultClass);
+        }
+
         Docket docket = new Docket(DocumentationType.SWAGGER_2)
                 .enable(swaggerConfig.isEnabled())
                 .useDefaultResponseMessages(false);

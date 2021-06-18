@@ -1,6 +1,5 @@
 package com.giants.boot.gateway.configuration;
 
-import com.giants.boot.gateway.configuration.annotation.AnnotationAspect;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
@@ -19,14 +18,12 @@ import org.springframework.context.annotation.Import;
 @Configuration
 @EnableConfigurationProperties(GiantsBootGatewayProperties.class)
 @EnableEurekaClient
-//@EnableFeignClients(basePackages = "{basePackage}.**.api")
-//@ComponentScan(basePackages = {"{basePackage}.**.controller", "{basePackage}.**.configuration"})
+@EnableFeignClients(basePackages = "${giants.boot.base-package:com.giants}.**.api")
+@ComponentScan(basePackages = {"${giants.boot.base-package:com.giants}.**.controller", "${giants.boot.base-package:com.giants}.**.configuration"})
 @Import({
         GiantsBootGatewaySpringBeansConfiguration.class,
-        GiantsBootGatewayFeignConfiguration.class,
         GiantsBootGatewayAopConfiguration.class,
-        SwaggerConfig.class,
-        AnnotationAspect.class
+        GiantsSwaggerConfig.class
 })
 public class GiantsBootGatewayConfiguration {
 }

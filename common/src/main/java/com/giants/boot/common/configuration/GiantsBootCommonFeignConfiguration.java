@@ -1,8 +1,9 @@
-package com.giants.boot.gateway.configuration;
+package com.giants.boot.common.configuration;
 
-import com.giants.boot.gateway.configuration.feign.BeanQueryMapNestEncoder;
-import com.giants.boot.gateway.configuration.feign.FeignErrorDecoder;
+import com.giants.feign.codec.FeignErrorDecoder;
+import com.giants.feign.querymap.BeanQueryMapNestEncoder;
 import feign.Feign;
+import feign.QueryMapEncoder;
 import feign.Retryer;
 import feign.codec.ErrorDecoder;
 import org.springframework.context.annotation.Bean;
@@ -17,13 +18,17 @@ import org.springframework.context.annotation.Configuration;
  * @since 1.0
  */
 @Configuration
-public class GiantsBootGatewayFeignConfiguration {
+public class GiantsBootCommonFeignConfiguration {
 
     @Bean
     public Feign.Builder feignBuilder() {
         return Feign.builder()
-                .queryMapEncoder(new BeanQueryMapNestEncoder())
                 .retryer(Retryer.NEVER_RETRY);
+    }
+
+    @Bean
+    public QueryMapEncoder createQueryMapEncoder() {
+        return new BeanQueryMapNestEncoder();
     }
 
     @Bean

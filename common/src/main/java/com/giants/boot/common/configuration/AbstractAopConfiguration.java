@@ -1,4 +1,4 @@
-package com.giants.boot.gateway.configuration;
+package com.giants.boot.common.configuration;
 
 import org.springframework.aop.aspectj.AspectJAroundAdvice;
 import org.springframework.aop.aspectj.AspectJExpressionPointcut;
