@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>com.github.vencent-lu</groupId>
 	<artifactId>giants-boot-parent</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<packaging>pom</packaging>
 
 	<name>giants-boot-parent</name>
@@ -124,27 +124,27 @@
 			<dependency>
 				<groupId>com.github.vencent-lu</groupId>
 				<artifactId>giants-boot-starter-api</artifactId>
-				<version>${project.version}</version>
+				<version>1.0.1</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.vencent-lu</groupId>
 				<artifactId>giants-boot-starter-common</artifactId>
-				<version>${project.version}</version>
+				<version>1.0.1</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.vencent-lu</groupId>
 				<artifactId>giants-boot-starter-gateway</artifactId>
-				<version>${project.version}</version>
+				<version>1.0.1</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.vencent-lu</groupId>
 				<artifactId>giants-boot-starter-biz</artifactId>
-				<version>${project.version}</version>
+				<version>1.0.1</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.vencent-lu</groupId>
 				<artifactId>giants-boot-starter-server</artifactId>
-				<version>${project.version}</version>
+				<version>1.0.1</version>
 			</dependency>
 
 			<dependency>
