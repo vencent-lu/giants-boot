@@ -5,7 +5,7 @@
     <parent>
         <artifactId>giants-boot-parent</artifactId>
         <groupId>com.github.vencent-lu</groupId>
-        <version>1.0.2</version>
+        <version>1.0.3</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -36,6 +36,19 @@
 
     <build>
         <plugins>
+            <!-- GPG -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <!-- Source -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
