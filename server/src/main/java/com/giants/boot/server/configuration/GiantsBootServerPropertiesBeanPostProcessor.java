@@ -27,9 +27,6 @@ public class GiantsBootServerPropertiesBeanPostProcessor implements BeanPostProc
 
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        if (bean instanceof GiantsBootServerProperties) {
-            System.out.println(bean);
-        }
         if (bean instanceof GiantsBootCommonProperties) {
             GiantsBootCommonProperties giantsBootCommonProperties = (GiantsBootCommonProperties)bean;
             GiantsBootCommonProperties.FastJsonConfig fastJsonConfig = giantsBootCommonProperties.getFastJsonConfig();
@@ -60,20 +57,6 @@ public class GiantsBootServerPropertiesBeanPostProcessor implements BeanPostProc
                 configuration.setDatabaseId("MySQL");
             }
             configuration.setMapUnderscoreToCamelCase(true);
-        }
-        return bean;
-    }
-
-    @Override
-    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-        if (bean instanceof GiantsBootServerProperties) {
-            System.out.println(bean);
-        }
-        if (bean instanceof GiantsBootCommonProperties) {
-            System.out.println(bean);
-        }
-        if (bean instanceof MybatisProperties) {
-            System.out.println(bean);
         }
         return bean;
     }
