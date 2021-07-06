@@ -23,6 +23,11 @@ import org.springframework.http.converter.HttpMessageConverter;
 public class GiantsBootServerSpringBeansConfiguration {
 
     @Bean
+    public GiantsBootServerPropertiesBeanPostProcessor createGiantsBootServerPropertiesBeanPostProcessor() {
+        return new GiantsBootServerPropertiesBeanPostProcessor();
+    }
+
+    @Bean
     public JsonExceptionResolver createJsonExceptionResolver(HttpMessageConverter<Object> fastJsonHttpMessageConverter) {
         JsonExceptionResolver jsonExceptionResolver = new JsonExceptionResolver();
         jsonExceptionResolver.setMessageConverters(Lists.newArrayList(fastJsonHttpMessageConverter));

@@ -32,6 +32,11 @@ import java.io.IOException;
 public class GiantsBootGatewaySpringBeansConfiguration {
 
     @Bean
+    public GiantsBootGatewayPropertiesBeanPostProcessor createGiantsBootGatewayPropertiesBeanPostProcessor() {
+        return new GiantsBootGatewayPropertiesBeanPostProcessor();
+    }
+
+    @Bean
     public FilterRegistrationBean<WebFilter> createWebFilter() {
         FilterRegistrationBean<WebFilter> webFilter = new FilterRegistrationBean<WebFilter>();
         webFilter.setName("webFilter");
