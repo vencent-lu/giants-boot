@@ -45,6 +45,7 @@ public class GiantsBootServerTransactionConfiguration {
 
         //只读事务
         RuleBasedTransactionAttribute readOnlyTx = new RuleBasedTransactionAttribute();
+        readOnlyTx.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
         readOnlyTx.setReadOnly(true);
 
         //配置加事务的规则,没有匹配到的方法将不会有事务，这些方法指的是Pointcut匹配到的方法

@@ -2,6 +2,7 @@ package com.giants.boot.common.configuration;
 
 import com.giants.web.springmvc.advice.JsonResultResponseAdvice;
 import com.google.common.collect.Lists;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 
@@ -17,17 +18,14 @@ import javax.annotation.Resource;
  */
 public abstract class AbstractSpringBeansConfiguration {
 
-    @Resource
-    private HttpMessageConverter fastJsonHttpMessageConverter;
-
-    protected RequestMappingHandlerAdapter createRequestMappingHandlerAdapter() {
+    protected RequestMappingHandlerAdapter createRequestMappingHandlerAdapter(HttpMessageConverter<Object> fastJsonHttpMessageConverter) {
         RequestMappingHandlerAdapter requestMappingHandlerAdapter = new RequestMappingHandlerAdapter();
         JsonResultResponseAdvice jsonResultResponseAdvice = new JsonResultResponseAdvice();
         jsonResultResponseAdvice.setJsonpQueryParamName("callback");
         jsonResultResponseAdvice.setUriExcludeList(Lists.newArrayList("/v2/api-docs",
                 "/swagger-resources/configuration/ui", "/swagger-resources/configuration/security","/swagger-resources"));
         requestMappingHandlerAdapter.setResponseBodyAdvice(Lists.newArrayList(jsonResultResponseAdvice));
-        requestMappingHandlerAdapter.setMessageConverters(Lists.newArrayList(this.fastJsonHttpMessageConverter));
+        requestMappingHandlerAdapter.setMessageConverters(Lists.newArrayList(fastJsonHttpMessageConverter));
         return requestMappingHandlerAdapter;
     }
 
