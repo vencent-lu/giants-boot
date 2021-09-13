@@ -5,7 +5,7 @@
     <parent>
         <artifactId>giants-boot-parent</artifactId>
         <groupId>com.github.vencent-lu</groupId>
-        <version>1.0.7</version>
+        <version>1.0.8</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -23,12 +23,6 @@
             <groupId>com.github.vencent-lu</groupId>
             <artifactId>giants-boot-starter-biz</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>

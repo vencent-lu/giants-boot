@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * GiantsBootGatewayProperties TODO
  * date time: 2021/6/6 22:24
- * Copyright 2021 www.meikuangrm.com Inc. All rights reserved.
+ * Copyright 2021 github.com/vencent-lu/giants-boot Inc. All rights reserved.
  *
  * @author vencent-lu
  * @since 1.0

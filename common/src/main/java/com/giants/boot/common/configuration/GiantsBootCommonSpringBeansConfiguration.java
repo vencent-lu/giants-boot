@@ -12,6 +12,7 @@ import com.giants.cache.redis.SpringDataRedisClient;
 import com.giants.cache.redis.impl.GiantsRedisImpl;
 import com.giants.common.SpringContextHelper;
 import com.giants.common.collections.CollectionUtils;
+import com.giants.common.fastjson.FastJson;
 import com.giants.web.springmvc.json.JsonSerializePropertyFilter;
 import com.giants.xmlmapping.config.exception.XmlMapException;
 import com.google.common.collect.Lists;
@@ -89,11 +90,8 @@ public class GiantsBootCommonSpringBeansConfiguration {
         return messageSource;
     }
 
-    @Bean("fastJsonHttpMessageConverter")
-    public HttpMessageConverter<Object> createHttpMessageConverter(GiantsBootCommonProperties giantsBootCommonProperties) {
-        FastJsonHttpMessageConverter fastJsonHttpMessageConverter = new FastJsonHttpMessageConverter();
-        fastJsonHttpMessageConverter.setSupportedMediaTypes(Lists.newArrayList(MediaType.APPLICATION_JSON));
-
+    @Bean
+    public FastJsonConfig createFastJsonConfig(GiantsBootCommonProperties giantsBootCommonProperties) {
         FastJsonConfig fastJsonConfig = new FastJsonConfig();
         fastJsonConfig.setDateFormat("yyyy-MM-dd HH:mm:ss");
         /**
@@ -115,6 +113,20 @@ public class GiantsBootCommonSpringBeansConfiguration {
                 fastJsonConfig.setSerializeFilters(jsonSerializePropertyFilter);
             }
         }
+        return fastJsonConfig;
+    }
+
+    @Bean
+    public FastJson createFastJson(FastJsonConfig fastJsonConfig) {
+        FastJson fastJson = new FastJson();
+        fastJson.setFastJsonConfig(fastJsonConfig);
+        return fastJson;
+    }
+
+    @Bean("fastJsonHttpMessageConverter")
+    public HttpMessageConverter<Object> createHttpMessageConverter(FastJsonConfig fastJsonConfig) {
+        FastJsonHttpMessageConverter fastJsonHttpMessageConverter = new FastJsonHttpMessageConverter();
+        fastJsonHttpMessageConverter.setSupportedMediaTypes(Lists.newArrayList(MediaType.APPLICATION_JSON));
         fastJsonHttpMessageConverter.setFastJsonConfig(fastJsonConfig);
         return fastJsonHttpMessageConverter;
     }
