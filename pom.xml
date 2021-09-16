@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>com.github.vencent-lu</groupId>
 	<artifactId>giants-boot-parent</artifactId>
-	<version>1.0.8</version>
+	<version>1.0.9</version>
 	<packaging>pom</packaging>
 
 	<name>giants-boot-parent</name>
@@ -95,27 +95,27 @@
 			<dependency>
 				<groupId>com.github.vencent-lu</groupId>
 				<artifactId>giants-boot-starter-api</artifactId>
-				<version>1.0.8</version>
+				<version>1.0.9</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.vencent-lu</groupId>
 				<artifactId>giants-boot-starter-common</artifactId>
-				<version>1.0.8</version>
+				<version>1.0.9</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.vencent-lu</groupId>
 				<artifactId>giants-boot-starter-gateway</artifactId>
-				<version>1.0.8</version>
+				<version>1.0.9</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.vencent-lu</groupId>
 				<artifactId>giants-boot-starter-biz</artifactId>
-				<version>1.0.8</version>
+				<version>1.0.9</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.vencent-lu</groupId>
 				<artifactId>giants-boot-starter-server</artifactId>
-				<version>1.0.8</version>
+				<version>1.0.9</version>
 			</dependency>
 
 			<dependency>
@@ -259,6 +259,41 @@
 						<artifactId>junit</artifactId>
 					</exclusion>
 				</exclusions>
+			</dependency>
+
+			<!-- 版本约束解决包冲突问题 -->
+			<dependency>
+				<groupId>commons-beanutils</groupId>
+				<artifactId>commons-beanutils</artifactId>
+				<version>1.9.4</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-collections</groupId>
+				<artifactId>commons-collections</artifactId>
+				<version>3.2.2</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<scope>compile</scope>
+				<version>19.0</version>
+			</dependency>
+			<dependency>
+				<groupId>com.netflix.servo</groupId>
+				<artifactId>servo-core</artifactId>
+				<version>0.12.21</version>
+				<scope>compile</scope>
+				<exclusions>
+					<exclusion>
+						<artifactId>*</artifactId>
+						<groupId>org.glassfish.jersey</groupId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>commons-digester</groupId>
+				<artifactId>commons-digester</artifactId>
+				<version>1.7</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
