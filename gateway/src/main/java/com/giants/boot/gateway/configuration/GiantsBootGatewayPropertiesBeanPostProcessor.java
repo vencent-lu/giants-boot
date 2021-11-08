@@ -45,6 +45,20 @@ public class GiantsBootGatewayPropertiesBeanPostProcessor implements BeanPostPro
         }
         if (bean instanceof GiantsBootGatewayProperties) {
             GiantsBootGatewayProperties giantsBootGatewayProperties = (GiantsBootGatewayProperties)bean;
+            GiantsBootGatewayProperties.JsonResultResponseConfig jsonResultResponseConfig =
+                    giantsBootGatewayProperties.getJsonResultResponseConfig();
+            if (jsonResultResponseConfig.getJsonpQueryParamNameList() == null) {
+                jsonResultResponseConfig.setJsonpQueryParamNameList(new ArrayList<>());
+            }
+            jsonResultResponseConfig.getJsonpQueryParamNameList().add("callback");
+            if (jsonResultResponseConfig.getUriExcludeList() == null) {
+                jsonResultResponseConfig.setUriExcludeList(new ArrayList<>());
+            }
+            jsonResultResponseConfig.getUriExcludeList().add("/v2/api-docs");
+            jsonResultResponseConfig.getUriExcludeList().add("/swagger-resources/configuration/ui");
+            jsonResultResponseConfig.getUriExcludeList().add("/swagger-resources/configuration/security");
+            jsonResultResponseConfig.getUriExcludeList().add("/swagger-resources");
+
             GiantsBootGatewayProperties.SwaggerConfig swaggerConfig = giantsBootGatewayProperties.getSwaggerConfig();
             if (swaggerConfig == null) {
                 swaggerConfig = new GiantsBootGatewayProperties.SwaggerConfig();

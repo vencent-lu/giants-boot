@@ -16,19 +16,62 @@ import java.util.List;
 public class GiantsBootGatewayProperties {
 
     /**
+     * JsonResult封装response返回结果配置
+     */
+    private JsonResultResponseConfig jsonResultResponseConfig;
+
+    /**
      * swagger配置
      */
     private SwaggerConfig swaggerConfig;
 
-    public SwaggerConfig getSwaggerConfig() {
-        if (swaggerConfig == null) {
-            return new SwaggerConfig();
+    public JsonResultResponseConfig getJsonResultResponseConfig() {
+        if (this.jsonResultResponseConfig == null) {
+            this.jsonResultResponseConfig = new JsonResultResponseConfig();
         }
-        return swaggerConfig;
+        return this.jsonResultResponseConfig;
+    }
+
+    public void setJsonResultResponseConfig(JsonResultResponseConfig jsonResultResponseConfig) {
+        this.jsonResultResponseConfig = jsonResultResponseConfig;
+    }
+
+    public SwaggerConfig getSwaggerConfig() {
+        if (this.swaggerConfig == null) {
+            this.swaggerConfig = new SwaggerConfig();
+        }
+        return this.swaggerConfig;
     }
 
     public void setSwaggerConfig(SwaggerConfig swaggerConfig) {
         this.swaggerConfig = swaggerConfig;
+    }
+
+    public static class JsonResultResponseConfig {
+        /**
+         * Jsonp 回调函数名列表
+         */
+        private List<String> jsonpQueryParamNameList;
+        /**
+         * 不需要JsonResult封装的请求uri
+         */
+        private List<String> uriExcludeList;
+
+        public List<String> getJsonpQueryParamNameList() {
+            return jsonpQueryParamNameList;
+        }
+
+        public void setJsonpQueryParamNameList(List<String> jsonpQueryParamNameList) {
+            this.jsonpQueryParamNameList = jsonpQueryParamNameList;
+        }
+
+        public List<String> getUriExcludeList() {
+            return uriExcludeList;
+        }
+
+        public void setUriExcludeList(List<String> uriExcludeList) {
+            this.uriExcludeList = uriExcludeList;
+        }
     }
 
     public static class SwaggerConfig {

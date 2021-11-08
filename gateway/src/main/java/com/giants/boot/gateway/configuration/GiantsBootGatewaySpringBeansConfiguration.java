@@ -4,11 +4,14 @@ import com.giants.cache.core.GiantsCache;
 import com.giants.cache.core.GiantsCacheManager;
 import com.giants.cache.core.aop.GiantsCacheAop;
 import com.giants.cache.core.filter.GiantsCacheFilter;
+import com.giants.common.collections.CollectionUtils;
 import com.giants.web.filter.WebFilter;
+import com.giants.web.springmvc.advice.JsonResultResponseAdvice;
 import com.giants.web.springmvc.aop.ControllerValidationAop;
 import com.giants.web.springmvc.resolver.JsonResultExceptionResolver;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang.ArrayUtils;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -47,10 +50,37 @@ public class GiantsBootGatewaySpringBeansConfiguration {
     }
 
     @Bean
-    public JsonResultExceptionResolver createJsonResultExceptionResolver(HttpMessageConverter<Object> fastJsonHttpMessageConverter) {
+    public JsonResultResponseAdvice createJsonResultResponseAdvice(GiantsBootGatewayProperties giantsBootGatewayProperties) {
+        JsonResultResponseAdvice jsonResultResponseAdvice = new JsonResultResponseAdvice();
+        if (CollectionUtils.isNotEmpty(giantsBootGatewayProperties.getJsonResultResponseConfig().getJsonpQueryParamNameList())) {
+            jsonResultResponseAdvice.setJsonpQueryParamNames(
+                    giantsBootGatewayProperties.getJsonResultResponseConfig().getJsonpQueryParamNameList().toArray(new String[]{}));
+        }
+        if (CollectionUtils.isNotEmpty(giantsBootGatewayProperties.getJsonResultResponseConfig().getUriExcludeList())) {
+            jsonResultResponseAdvice.setUriExcludeList(giantsBootGatewayProperties.getJsonResultResponseConfig().getUriExcludeList());
+        }
+        return jsonResultResponseAdvice;
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public GiantsRequestMappingHandlerAdapter createGiantsRequestMappingHandlerAdapter(JsonResultResponseAdvice jsonResultResponseAdvice,
+            HttpMessageConverter<Object> fastJsonHttpMessageConverter) {
+        GiantsRequestMappingHandlerAdapter giantsRequestMappingHandlerAdapter = new GiantsRequestMappingHandlerAdapter();
+        giantsRequestMappingHandlerAdapter.setResponseBodyAdvice(Lists.newArrayList(jsonResultResponseAdvice));
+        giantsRequestMappingHandlerAdapter.setMessageConverters(Lists.newArrayList(fastJsonHttpMessageConverter));
+        return giantsRequestMappingHandlerAdapter;
+    }
+
+    @Bean
+    public JsonResultExceptionResolver createJsonResultExceptionResolver(HttpMessageConverter<Object> fastJsonHttpMessageConverter,
+                                                                         GiantsBootGatewayProperties giantsBootGatewayProperties) {
         JsonResultExceptionResolver jsonResultExceptionResolver = new JsonResultExceptionResolver();
-        //jsonResultExceptionResolver.setIncludeModelAndView(true);
-        jsonResultExceptionResolver.setJsonpQueryParamName("callback");
+        if (CollectionUtils.isNotEmpty(giantsBootGatewayProperties.getJsonResultResponseConfig().getJsonpQueryParamNameList())) {
+            jsonResultExceptionResolver.setJsonpQueryParamNames(
+                    giantsBootGatewayProperties.getJsonResultResponseConfig().getJsonpQueryParamNameList().toArray(new String[]{}));
+        }
+        //jsonResultExceptionResolver.setJsonpQueryParamName("callback");
         jsonResultExceptionResolver.setMessageConverters(Lists.newArrayList(fastJsonHttpMessageConverter));
         return jsonResultExceptionResolver;
     }
