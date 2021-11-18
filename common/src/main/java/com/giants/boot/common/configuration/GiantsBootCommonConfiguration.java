@@ -15,8 +15,7 @@ import org.springframework.context.annotation.Import;
 @Configuration
 @EnableConfigurationProperties(GiantsBootCommonProperties.class)
 @Import({
-        GiantsBootCommonSpringBeansConfiguration.class,
-        GiantsBootCommonFeignConfiguration.class
+        GiantsBootCommonSpringBeansConfiguration.class
 })
 public class GiantsBootCommonConfiguration {
 }

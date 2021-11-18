@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "giants.boot.server.version",
+      "type": "java.lang.String",
+      "description": "Giants Server Version."
+    }
+  ]
+}

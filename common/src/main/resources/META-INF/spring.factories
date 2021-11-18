@@ -1,2 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 com.giants.boot.common.configuration.GiantsBootCommonConfiguration
+org.springframework.context.ApplicationListener=\
+com.giants.boot.common.spring.context.GiantsBootCommonPropertySourcesProcessListener

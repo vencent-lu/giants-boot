@@ -4,12 +4,12 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.5.5</version>
+		<version>2.5.6</version>
 		<relativePath/>
 	</parent>
 	<groupId>com.github.vencent-lu</groupId>
 	<artifactId>giants-boot-parent</artifactId>
-	<version>1.2.0</version>
+	<version>1.3.0</version>
 	<packaging>pom</packaging>
 
 	<name>giants-boot-parent</name>
@@ -85,7 +85,7 @@
 		<!-- 项目版本定义 -->
 		<project-name>giants-boot-parent</project-name>
 		<!-- 依赖库版本定义 -->
-		<giants.web.version>1.1.7</giants.web.version>
+		<giants.web.version>1.1.8</giants.web.version>
 		<!-- Plugin的属性定义 -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -95,27 +95,27 @@
 			<dependency>
 				<groupId>com.github.vencent-lu</groupId>
 				<artifactId>giants-boot-starter-api</artifactId>
-				<version>1.2.0</version>
+				<version>1.3.0</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.vencent-lu</groupId>
 				<artifactId>giants-boot-starter-common</artifactId>
-				<version>1.2.0</version>
+				<version>1.3.0</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.vencent-lu</groupId>
 				<artifactId>giants-boot-starter-gateway</artifactId>
-				<version>1.2.0</version>
+				<version>1.3.0</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.vencent-lu</groupId>
 				<artifactId>giants-boot-starter-biz</artifactId>
-				<version>1.2.0</version>
+				<version>1.3.0</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.vencent-lu</groupId>
 				<artifactId>giants-boot-starter-server</artifactId>
-				<version>1.2.0</version>
+				<version>1.3.0</version>
 			</dependency>
 
 			<dependency>
@@ -162,7 +162,7 @@
 			<dependency>
 				<groupId>com.github.vencent-lu</groupId>
 				<artifactId>giants-feign</artifactId>
-				<version>1.0.2</version>
+				<version>1.1.0</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.vencent-lu</groupId>

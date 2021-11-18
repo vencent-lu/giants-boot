@@ -1,5 +1,6 @@
 package com.giants.boot.server.configuration;
 
+import com.giants.boot.common.configuration.GiantsBootCommonProperties;
 import com.giants.cache.core.GiantsCache;
 import com.giants.cache.core.aop.GiantsCacheAop;
 import com.giants.cache.redis.RedisClient;
@@ -28,9 +29,14 @@ public class GiantsBootServerSpringBeansConfiguration {
     }
 
     @Bean
-    public JsonExceptionResolver createJsonExceptionResolver(HttpMessageConverter<Object> fastJsonHttpMessageConverter) {
+    public JsonExceptionResolver createJsonExceptionResolver(HttpMessageConverter<Object> fastJsonHttpMessageConverter,
+                                                             GiantsBootCommonProperties giantsBootCommonProperties) {
         JsonExceptionResolver jsonExceptionResolver = new JsonExceptionResolver();
         jsonExceptionResolver.setMessageConverters(Lists.newArrayList(fastJsonHttpMessageConverter));
+        if (giantsBootCommonProperties.getFeignConfig() != null
+                && giantsBootCommonProperties.getFeignConfig().getResponseExceptionStatus() != null) {
+            jsonExceptionResolver.setResponseExceptionStatus(giantsBootCommonProperties.getFeignConfig().getResponseExceptionStatus());
+        }
         return jsonExceptionResolver;
     }
 

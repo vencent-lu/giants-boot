@@ -4,6 +4,7 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * GiantsBootCommonProperties TODO
@@ -19,6 +20,10 @@ public class GiantsBootCommonProperties {
      * Giants 框架扫描基础包名前缀
      */
     private String basePackage;
+    /**
+     * Feign 配置
+     */
+    private FeignConfig feignConfig;
     /**
      * FastJson 配置
      */
@@ -44,6 +49,14 @@ public class GiantsBootCommonProperties {
         this.basePackage = basePackage;
     }
 
+    public FeignConfig getFeignConfig() {
+        return feignConfig;
+    }
+
+    public void setFeignConfig(FeignConfig feignConfig) {
+        this.feignConfig = feignConfig;
+    }
+
     public FastJsonConfig getFastJsonConfig() {
         return fastJsonConfig;
     }
@@ -66,6 +79,33 @@ public class GiantsBootCommonProperties {
 
     public void setCacheConfig(CacheConfig cacheConfig) {
         this.cacheConfig = cacheConfig;
+    }
+
+    public static class FeignConfig {
+        /**
+         * FeignExceptionDecoder 反序列化异常对应状态码
+         */
+        private Integer responseExceptionStatus;
+        /**
+         * Feign client 版本号
+         */
+        private Map<String, String> clientVersionMap;
+
+        public Integer getResponseExceptionStatus() {
+            return responseExceptionStatus;
+        }
+
+        public void setResponseExceptionStatus(Integer responseExceptionStatus) {
+            this.responseExceptionStatus = responseExceptionStatus;
+        }
+
+        public Map<String, String> getClientVersionMap() {
+            return clientVersionMap;
+        }
+
+        public void setClientVersionMap(Map<String, String> clientVersionMap) {
+            this.clientVersionMap = clientVersionMap;
+        }
     }
 
     public static class FastJsonConfig {
