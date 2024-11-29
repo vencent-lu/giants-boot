@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
-    <property name="appName" value="giants-gateway"/>
+    <property name="appName" value="giants-aggregator"/>
     <include resource="com/giants/boot/logging/logback/timeout-appender.xml"/>
 </configuration>

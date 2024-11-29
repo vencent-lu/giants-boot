@@ -1,19 +1,19 @@
-package com.giants.boot.gateway.configuration;
+package com.giants.boot.aggregator.configuration;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.List;
 
 /**
- * GiantsBootGatewayProperties TODO
- * date time: 2021/6/6 22:24
- * Copyright 2021 github.com/vencent-lu/giants-boot Inc. All rights reserved.
+ * GiantsBootAggregatorProperties TODO
+ * date time: 2024/11/29 15:30
+ * Copyright 2024 github.com/vencent-lu/giants-boot Inc. All rights reserved.
  *
  * @author vencent-lu
- * @since 1.0
+ * @since 1.5.0
  */
 @ConfigurationProperties(prefix = "giants.boot")
-public class GiantsBootGatewayProperties {
+public class GiantsBootAggregatorProperties {
 
     /**
      * JsonResult封装response返回结果配置

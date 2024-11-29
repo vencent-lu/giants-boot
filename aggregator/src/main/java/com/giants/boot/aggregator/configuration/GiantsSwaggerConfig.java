@@ -1,4 +1,4 @@
-package com.giants.boot.gateway.configuration;
+package com.giants.boot.aggregator.configuration;
 
 import com.giants.boot.common.configuration.GiantsBootCommonProperties;
 import com.giants.common.collections.CollectionUtils;
@@ -22,12 +22,12 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 
 /**
- * SwaggerConfig TODO
- * date time: 2021/5/10 11:05
- * Copyright 2021 github.com/vencent-lu/giants-boot Inc. All rights reserved.
+ * GiantsSwaggerConfig TODO
+ * date time: 2024/11/29 15:31
+ * Copyright 2024 github.com/vencent-lu/giants-boot Inc. All rights reserved.
  *
  * @author vencent-lu
- * @since 1.0
+ * @since 1.5.0
  */
 @Configuration
 @EnableSwagger2
@@ -36,7 +36,7 @@ public class GiantsSwaggerConfig {
     @Resource
     private GiantsBootCommonProperties giantsBootCommonProperties;
     @Resource
-    private GiantsBootGatewayProperties giantsBootGatewayProperties;
+    private GiantsBootAggregatorProperties giantsBootAggregatorProperties;
     @Resource
     private GiantsSwaggerProperties giantsSwaggerProperties;
 
@@ -46,7 +46,7 @@ public class GiantsSwaggerConfig {
                 && CollectionUtils.isEmpty(this.giantsSwaggerProperties.getIgnoreModelPropertyNames())) {
             this.giantsSwaggerProperties.setIgnoreModelPropertyNames(this.giantsBootCommonProperties.getFastJsonConfig().getIgnorePropertyNames());
         }
-        GiantsBootGatewayProperties.SwaggerConfig swaggerConfig = this.giantsBootGatewayProperties.getSwaggerConfig();
+        GiantsBootAggregatorProperties.SwaggerConfig swaggerConfig = this.giantsBootAggregatorProperties.getSwaggerConfig();
         if (CollectionUtils.isNotEmpty(swaggerConfig.getIgnoreParameterTypes())
                 && CollectionUtils.isEmpty(this.giantsSwaggerProperties.getIgnoreParameterTypes())) {
             this.giantsSwaggerProperties.setIgnoreParameterTypes(swaggerConfig.getIgnoreParameterTypes());
@@ -75,7 +75,7 @@ public class GiantsSwaggerConfig {
         return apiSelectorBuilder.paths(PathSelectors.any()).build();
     }
 
-    private ApiInfo apiInfo(GiantsBootGatewayProperties.SwaggerConfig.ApiInfo apiInfo){
+    private ApiInfo apiInfo(GiantsBootAggregatorProperties.SwaggerConfig.ApiInfo apiInfo){
         Contact contact = null;
         if (apiInfo.getContact() != null) {
             contact = new Contact(apiInfo.getContact().getName(), apiInfo.getContact().getUrl(),

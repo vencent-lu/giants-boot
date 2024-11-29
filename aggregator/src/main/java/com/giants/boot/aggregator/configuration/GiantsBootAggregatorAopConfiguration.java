@@ -1,4 +1,4 @@
-package com.giants.boot.gateway.configuration;
+package com.giants.boot.aggregator.configuration;
 
 import com.giants.analyse.aop.EnterExecutionTimeProfilerAop;
 import com.giants.boot.common.configuration.AbstractAopConfiguration;
@@ -15,15 +15,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 
 /**
- * AopConfiguration TODO
- * date time: 2021/6/5 12:00
- * Copyright 2021 github.com/vencent-lu/giants-boot Inc. All rights reserved.
+ * GiantsBootAggregatorAopConfiguration TODO
+ * date time: 2024/11/29 15:33
+ * Copyright 2024 github.com/vencent-lu/giants-boot Inc. All rights reserved.
  *
  * @author vencent-lu
- * @since 1.0
+ * @since 1.5.0
  */
 @Configuration
-public class GiantsBootGatewayAopConfiguration extends AbstractAopConfiguration {
+public class GiantsBootAggregatorAopConfiguration extends AbstractAopConfiguration {
 
     @Bean
     public AspectJPointcutAdvisor createValidatorControllerMethodAdvisor(BeanFactory beanFactory,

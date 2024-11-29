@@ -5,14 +5,14 @@
     <parent>
         <artifactId>giants-boot-parent</artifactId>
         <groupId>com.github.vencent-lu</groupId>
-        <version>1.4.0</version>
+        <version>1.5.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>giants-boot-starter-gateway</artifactId>
+    <artifactId>giants-boot-starter-aggregator</artifactId>
     <packaging>jar</packaging>
 
-    <name>giants-boot-starter-gateway</name>
+    <name>giants-boot-starter-aggregator</name>
 
     <dependencies>
         <dependency>

@@ -1,4 +1,4 @@
-package com.giants.boot.gateway.configuration;
+package com.giants.boot.aggregator.configuration;
 
 import com.giants.cache.core.GiantsCache;
 import com.giants.cache.core.GiantsCacheManager;
@@ -24,19 +24,19 @@ import org.springmodules.validation.commons.DefaultValidatorFactory;
 import java.io.IOException;
 
 /**
- * SpringBeansConfiguration TODO
- * date time: 2021/6/5 10:50
- * Copyright 2021 github.com/vencent-lu/giants-boot Inc. All rights reserved.
+ * GiantsBootAggregatorSpringBeansConfiguration TODO
+ * date time: 2024/11/29 15:31
+ * Copyright 2024 github.com/vencent-lu/giants-boot Inc. All rights reserved.
  *
  * @author vencent-lu
- * @since 1.0
+ * @since 1.5.0
  */
 @Configuration
-public class GiantsBootGatewaySpringBeansConfiguration {
+public class GiantsBootAggregatorSpringBeansConfiguration {
 
     @Bean
-    public GiantsBootGatewayPropertiesBeanPostProcessor createGiantsBootGatewayPropertiesBeanPostProcessor() {
-        return new GiantsBootGatewayPropertiesBeanPostProcessor();
+    public GiantsBootAggregatorPropertiesBeanPostProcessor createGiantsBootGatewayPropertiesBeanPostProcessor() {
+        return new GiantsBootAggregatorPropertiesBeanPostProcessor();
     }
 
     @Bean
@@ -50,14 +50,14 @@ public class GiantsBootGatewaySpringBeansConfiguration {
     }
 
     @Bean
-    public JsonResultResponseAdvice createJsonResultResponseAdvice(GiantsBootGatewayProperties giantsBootGatewayProperties) {
+    public JsonResultResponseAdvice createJsonResultResponseAdvice(GiantsBootAggregatorProperties giantsBootAggregatorProperties) {
         JsonResultResponseAdvice jsonResultResponseAdvice = new JsonResultResponseAdvice();
-        if (CollectionUtils.isNotEmpty(giantsBootGatewayProperties.getJsonResultResponseConfig().getJsonpQueryParamNameList())) {
+        if (CollectionUtils.isNotEmpty(giantsBootAggregatorProperties.getJsonResultResponseConfig().getJsonpQueryParamNameList())) {
             jsonResultResponseAdvice.setJsonpQueryParamNames(
-                    giantsBootGatewayProperties.getJsonResultResponseConfig().getJsonpQueryParamNameList().toArray(new String[]{}));
+                    giantsBootAggregatorProperties.getJsonResultResponseConfig().getJsonpQueryParamNameList().toArray(new String[]{}));
         }
-        if (CollectionUtils.isNotEmpty(giantsBootGatewayProperties.getJsonResultResponseConfig().getUriExcludeList())) {
-            jsonResultResponseAdvice.setUriExcludeList(giantsBootGatewayProperties.getJsonResultResponseConfig().getUriExcludeList());
+        if (CollectionUtils.isNotEmpty(giantsBootAggregatorProperties.getJsonResultResponseConfig().getUriExcludeList())) {
+            jsonResultResponseAdvice.setUriExcludeList(giantsBootAggregatorProperties.getJsonResultResponseConfig().getUriExcludeList());
         }
         return jsonResultResponseAdvice;
     }
@@ -74,11 +74,11 @@ public class GiantsBootGatewaySpringBeansConfiguration {
 
     @Bean
     public JsonResultExceptionResolver createJsonResultExceptionResolver(HttpMessageConverter<Object> fastJsonHttpMessageConverter,
-                                                                         GiantsBootGatewayProperties giantsBootGatewayProperties) {
+                                                                         GiantsBootAggregatorProperties giantsBootAggregatorProperties) {
         JsonResultExceptionResolver jsonResultExceptionResolver = new JsonResultExceptionResolver();
-        if (CollectionUtils.isNotEmpty(giantsBootGatewayProperties.getJsonResultResponseConfig().getJsonpQueryParamNameList())) {
+        if (CollectionUtils.isNotEmpty(giantsBootAggregatorProperties.getJsonResultResponseConfig().getJsonpQueryParamNameList())) {
             jsonResultExceptionResolver.setJsonpQueryParamNames(
-                    giantsBootGatewayProperties.getJsonResultResponseConfig().getJsonpQueryParamNameList().toArray(new String[]{}));
+                    giantsBootAggregatorProperties.getJsonResultResponseConfig().getJsonpQueryParamNameList().toArray(new String[]{}));
         }
         //jsonResultExceptionResolver.setJsonpQueryParamName("callback");
         jsonResultExceptionResolver.setMessageConverters(Lists.newArrayList(fastJsonHttpMessageConverter));
